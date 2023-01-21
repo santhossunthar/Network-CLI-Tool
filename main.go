@@ -18,6 +18,10 @@ func main() {
 			Name:  "host",
 			Value: "example.com",
 		},
+		cli.StringFlag{
+			Name: "ip",
+			Value: "127.0.0.1",
+		},
 	}
 
 	app.Commands = []cli.Command{
@@ -81,6 +85,23 @@ func main() {
 
 				for i := 0; i < len(mxs); i++ {
 					fmt.Println(mxs[i].Host, mxs[i].Pref)
+				}
+
+				return nil
+			},
+		},
+		{
+			Name: "addrlookup",
+			Usage: "Look up the address of the IP address",
+			Flags: myFlags,
+			Action: func (c *cli.Context) error  {
+				addr, err := net.LookupAddr(c.String("ip"))
+				if err != nil {
+					return err
+				}
+
+				for i := 0; i < len(addr); i++ {
+					fmt.Println(addr[i])
 				}
 
 				return nil
