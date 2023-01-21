@@ -50,6 +50,23 @@ func main() {
 				return nil
 			},
 		},
+		{
+			Name: "iplookup",
+			Usage: "Look up the IP Addresses",
+			Flags: myFlags,
+			Action: func (c *cli.Context) error  {
+				ips, err := net.LookupIP(c.String("host"))
+				if err != nil {
+					return nil
+				}
+
+				for i := 0; i < len(ips); i++ {
+					fmt.Println(ips[i])
+				}
+
+				return nil
+			},
+		},
 	}
 
 	err := app.Run(os.Args)
