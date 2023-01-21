@@ -36,6 +36,20 @@ func main() {
 				return nil
 			},
 		},
+		{
+			Name: "cname",
+			Usage: "Look up the CNAME records",
+			Flags: myFlags,
+			Action: func(c *cli.Context) error {
+				cnames, err := net.LookupCNAME(c.String("host"))
+				if err != nil {
+					return nil
+				}
+
+				fmt.Println(cnames)
+				return nil
+			},
+		},
 	}
 
 	err := app.Run(os.Args)
