@@ -107,6 +107,22 @@ func main() {
 				return nil
 			},
 		},
+		{
+			Name: "dnstxt",
+			Usage: "Look up the DNS TXT records",
+			Flags: myFlags,
+			Action: func (c *cli.Context) error  {
+				txts, err := net.LookupTXT(c.String("host"))
+				if err != nil {
+					return err
+				}
+				for i := 0; i < len(txts); i++ {
+					fmt.Println(txts[i])
+				}
+				
+				return nil
+			},
+		},
 	}
 
 	err := app.Run(os.Args)
