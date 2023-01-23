@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/urfave/cli"
+	"main/port"
 )
 
 func main() {
@@ -21,6 +22,14 @@ func main() {
 		cli.StringFlag{
 			Name: "ip",
 			Value: "127.0.0.1",
+		},
+		cli.StringFlag{
+			Name: "port",
+			Value: "80",
+		},
+		cli.StringFlag{
+			Name: "protocol",
+			Value: "tcp",
 		},
 	}
 
@@ -121,6 +130,14 @@ func main() {
 				}
 				
 				return nil
+			},
+		},
+		{
+			Name: "portscan",
+			Usage: "Look up the open and closed ports",
+			Flags: myFlags,
+			Action: func (c *cli.Context) {
+				port.ScanPorts(c.String("protocol"), c.String("host"))	
 			},
 		},
 	}
